@@ -1,0 +1,29 @@
+    ###        Itens a serem feitos      ###
+- leitura de arquivo de cena
+- iluminação com fontes de luz definidas no arquivo de cena
+- projeção ortogonal e perspectiva
+- interação:
+--- órbita ao redor da cena
+--- zoom
+--- liga/desliga iluminação
+--- liga/desliga grid
+--- seleção de objeto
+--- liga/desliga visibilidade de objeto selecionado
+--- movimentação de objeto selecionado
+--- escolha da projeção (ortogonal / perspectiva)
+--- criação de objetos
+- objetos a serem considerados:
+--- objetos glutSolidXXXX
+--- nossos objetos (cubo, disco, cone, cilindro)
+--- composição de objetos (cruz3d, p.ex.)
+--- coleção de triângulos
+--- objeto em movimento (velocidade e aceleração iniciais)
+ 
+    ###       Itens começados         ###     
+
+
+
+
+
+
+    ###        Itens já feitos        ###
