@@ -10,7 +10,7 @@
 
 using namespace std;
 
-char title[] = "OpenGL-PUC PR 2021 - ILUMINAÇÃO TETRAHEDRO - NORMAIS";
+char title[] = "OpenGL-PUC PR 2021 - ";
 
 boolean grid_on = true;
 
@@ -24,7 +24,7 @@ GLfloat zCut = 0.0f;
 
 GLfloat posicaoLuz[4] = { 0.0, 150.0, 500.0, 1.0 };
 
-TetraHedro tetrahedro1(1,0.0f,0.0f,0.0f, 25.0f);
+
 
 void cor(std::string n_cor) {
 	if (n_cor == "BRANCO") glColor3f(1.0f, 1.0f, 1.0f); else
@@ -189,20 +189,7 @@ void grid() {
 	glLineWidth(1.0f);
 }
 
-void eixos() {
-	glBegin(GL_LINES); // eixos
-		cor("VERMELHO"); // vermelho eixo x
-		glVertex3f(0.0f, 0.0f, 0.0f);
-		glVertex3f(nRange / 2, 0.0f, 0.0f);
-		cor("VERDE"); // verde eixo y
-		glVertex3f(0.0f, 0.0f, 0.0f);
-		glVertex3f(0.0f, nRange / 2, 0.0f);
-		cor("AZUL"); // azul eixo z
-		glVertex3f(0.0f, 0.0f, 0.0f);
-		glVertex3f(0.0f, 0.0f, nRange / 2);
-	glEnd();
 
-}
 /* Handler for window-repaint event. Called back when the window first appears and
 whenever the window needs to be re-painted. */
 void render() {
@@ -215,33 +202,6 @@ void render() {
 
 		if (grid_on) grid();
 
-	
-		glPushMatrix();
-			glRotatef(90.0f, 1, 0, 0);
-			glTranslatef(0.0f,0.0f,-25.0f);
-			cor("VERDE");
-			glutSolidCylinder(10, 50, 10, 1);
-			eixos();
-		glPopMatrix();
-
-		glPushMatrix();
-			glTranslatef(0.0f, 0.0f, -25.0f);
-			cor("AZUL");
-			glutSolidCylinder(10, 50, 10, 1);
-			eixos();
-		glPopMatrix();
-
-		glPushMatrix();
-			glRotatef(90.0f, 0, 1, 0);
-			glTranslatef(0.0f, 0.0f, -25.0f);
-			cor("VERMELHO");
-			glutSolidCylinder(10, 50, 10, 1);
-			eixos();
-		glPopMatrix();
-
-	glPopMatrix();
-	
-	//tetrahedro1.Desenha();
 
 	glutSwapBuffers();  // Swap the front and back frame buffers (double buffering)
 }

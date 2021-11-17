@@ -1,4 +1,8 @@
 ﻿  freeglut_vc19.cpp
-C:\temp\freeglut_15(Tetraedo com Normal)\freeglut_vc19\freeglut_vc19.cpp(138,46): warning C4305: 'inicializando': truncamento de 'double' para 'GLfloat'
-C:\temp\freeglut_15(Tetraedo com Normal)\freeglut_vc19\freeglut_vc19.cpp(169,13): warning C4244: 'inicializando': conversão de 'GLfloat' para 'int', possível perda de dados
-  freeglut_vc19.vcxproj -> C:\temp\freeglut_15(Tetraedo com Normal)\x64\Debug\freeglut_vc19.exe
+C:\Users\User\Documents\Programas\GitHub\Projeto-CSG-3D\Projeto\freeglut_vc19\freeglut_vc19.cpp(138,46): warning C4305: 'inicializando': truncamento de 'double' para 'GLfloat'
+C:\Users\User\Documents\Programas\GitHub\Projeto-CSG-3D\Projeto\freeglut_vc19\freeglut_vc19.cpp(169,13): warning C4244: 'inicializando': conversão de 'GLfloat' para 'int', possível perda de dados
+  TetraHedro.cpp
+C:\Users\User\Documents\Programas\GitHub\Projeto-CSG-3D\Projeto\freeglut_vc19\TetraHedro.cpp(17,34): warning C4305: 'inicializando': truncamento de 'long double' para 'float'
+  Triangle.cpp
+  Gerando Código...
+  freeglut_vc19.vcxproj -> C:\Users\User\Documents\Programas\GitHub\Projeto-CSG-3D\Projeto\x64\Debug\freeglut_vc19.exe

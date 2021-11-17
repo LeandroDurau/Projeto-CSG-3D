@@ -3,10 +3,6 @@
 - iluminação com fontes de luz definidas no arquivo de cena
 - projeção ortogonal e perspectiva
 - interação:
---- órbita ao redor da cena
---- zoom
---- liga/desliga iluminação
---- liga/desliga grid
 --- seleção de objeto
 --- liga/desliga visibilidade de objeto selecionado
 --- movimentação de objeto selecionado
@@ -27,3 +23,8 @@
 
 
     ###        Itens já feitos        ###
+
+--- órbita ao redor da cena
+--- zoom
+--- liga/desliga iluminação
+--- liga/desliga grid
