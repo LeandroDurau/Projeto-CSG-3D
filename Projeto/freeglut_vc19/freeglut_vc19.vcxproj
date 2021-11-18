@@ -145,11 +145,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Cilindro.cpp" />
+    <ClCompile Include="Cone.cpp" />
+    <ClCompile Include="Cubo.cpp" />
+    <ClCompile Include="Disco.cpp" />
     <ClCompile Include="freeglut_vc19.cpp" />
     <ClCompile Include="TetraHedro.cpp" />
     <ClCompile Include="Triangle.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Cilindro.h" />
+    <ClInclude Include="Cone.h" />
+    <ClInclude Include="Cubo.h" />
+    <ClInclude Include="Disco.h" />
     <ClInclude Include="TetraHedro.h" />
     <ClInclude Include="Triangle.h" />
   </ItemGroup>

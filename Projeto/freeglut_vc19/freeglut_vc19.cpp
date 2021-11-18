@@ -5,16 +5,25 @@
 #include <iostream>		  // for "cout <<" 
 #include <string>
 
+#include <fstream>
+
 #include "Triangle.h"
 #include "TetraHedro.h"
+#include "Cubo.h"
+#include "Disco.h"
+#include "Cone.h"
+#include "Cilindro.h"
 
 using namespace std;
 
 char title[] = "OpenGL-PUC PR 2021 - ";
 
 boolean grid_on = true;
+boolean lights_on = true;
+int numObjects;
+int resolution = 24;
 
-GLfloat nRange = 200.0f;
+GLfloat nRange = 100.0f;
 GLfloat angleV = 45.0f, fAspect;
 GLfloat angleX = 0.0f, angleY = 0.0f, angleZ;
 GLfloat obsX = 0, obsY = 0, obsZ = 200;
@@ -23,6 +32,20 @@ GLfloat zFar = -100.0f;
 GLfloat zCut = 0.0f;
 
 GLfloat posicaoLuz[4] = { 0.0, 150.0, 500.0, 1.0 };
+
+typedef struct objeto {
+	int id;
+	float dim1, dim2;
+	float x, y, z;
+	float r, g, b;
+};
+
+objeto ObjectList[12];
+
+Cubo cuboNosso;
+Disco discoNosso(resolution);
+Cone coneNosso(resolution);
+Cilindro cilindroNosso(resolution);
 
 
 
@@ -90,15 +113,34 @@ void processSpecialKeys(int key, int xx, int yy) {
 	setVisParam();
 	glutPostRedisplay();
 }
+void DisplayFileRead(const char* fileName) // na versão 2015 (char * fileName)
+{
+	fstream inStream;
+	inStream.open(fileName, ios::in); // abre o arquivo
+	if (inStream.fail()) return;      //falha na abertura do arquivo
+	cout << "Abertura do arquivo com sucesso ..." << endl;
+	inStream >> numObjects;			  // lê primeira linha do arquivo, número de objetos 
+	cout << numObjects << " Objetos na cena ..." << endl;
+	for (int i = 1; i <= numObjects; i++) { // leitura das demais linhas, id dos objetos, dimensões, posição e cor
+		inStream >> ObjectList[i].id
+			>> ObjectList[i].dim1 >> ObjectList[i].dim2
+			>> ObjectList[i].x >> ObjectList[i].y >> ObjectList[i].z
+			>> ObjectList[i].r >> ObjectList[i].g >> ObjectList[i].b;
+	}
+	inStream.close();				// fecha o arquivo
+}
 void processRegularKey(unsigned char key, int xx, int yy) {
 	switch (key) {
 	case 'L':
 	case 'l':
-		glEnable(GL_LIGHTING);
-		break;
-	case 'O':
-	case 'o':
-		glDisable(GL_LIGHTING);
+		if (lights_on) {
+			lights_on = false;
+			glDisable(GL_LIGHTING);
+		}
+		else {
+			lights_on = true;
+			glEnable(GL_LIGHTING);
+		}
 		break;
 	case 'G':
 	case 'g':
@@ -199,11 +241,76 @@ void render() {
 		glRotatef(angleX, 1.0f, 0.0f, 0.0f);
 		glRotatef(angleY, 0.0f, 1.0f, 0.0f);
 		glRotatef(angleZ, 0.0f, 0.0f, 1.0f);
-
 		if (grid_on) grid();
 
 
-	glutSwapBuffers();  // Swap the front and back frame buffers (double buffering)
+	for (int i = 1; i <= numObjects; i++) {
+		switch (ObjectList[i].id) {
+		case 1: //cubo
+			glPushMatrix();
+			glColor3f(ObjectList[i].r, ObjectList[i].g, ObjectList[i].b);
+			glTranslatef(ObjectList[i].x, ObjectList[i].y, ObjectList[i].z);
+			glutSolidCube(ObjectList[i].dim1);
+			glPopMatrix();
+			break;
+		case 2: //esfera
+			glPushMatrix();
+			glColor3f(ObjectList[i].r, ObjectList[i].g, ObjectList[i].b);
+			glTranslatef(ObjectList[i].x, ObjectList[i].y, ObjectList[i].z);
+			glutSolidSphere(ObjectList[i].dim1, resolution, resolution);
+			glPopMatrix();
+			break;
+		case 3: //Teapot
+			glPushMatrix();
+			glColor3f(ObjectList[i].r, ObjectList[i].g, ObjectList[i].b);
+			glTranslatef(ObjectList[i].x, ObjectList[i].y, ObjectList[i].z);
+			glutSolidTeapot(ObjectList[i].dim1);
+			glPopMatrix();
+			break;
+		case 4: //Teacup
+			glPushMatrix();
+			glColor3f(ObjectList[i].r, ObjectList[i].g, ObjectList[i].b);
+			glTranslatef(ObjectList[i].x, ObjectList[i].y, ObjectList[i].z);
+			glutSolidTeacup(ObjectList[i].dim1);
+			glPopMatrix();
+			break;
+		case 5: //Cubo nosso
+			glPushMatrix();
+			glColor3f(ObjectList[i].r, ObjectList[i].g, ObjectList[i].b);
+			glTranslatef(ObjectList[i].x, ObjectList[i].y, ObjectList[i].z);
+			cuboNosso.setValores(ObjectList[i].dim1);
+			cuboNosso.Desenha();
+			glPopMatrix();
+			break;
+		case 6: //Disco nosso
+			glPushMatrix();
+			glColor3f(ObjectList[i].r, ObjectList[i].g, ObjectList[i].b);
+			glTranslatef(ObjectList[i].x, ObjectList[i].y, ObjectList[i].z);
+			discoNosso.setValores(ObjectList[i].dim1);
+			discoNosso.Desenha();
+			glPopMatrix();
+			break;
+		case 7: //Cone nosso
+			glPushMatrix();
+			glColor3f(ObjectList[i].r, ObjectList[i].g, ObjectList[i].b);
+			glTranslatef(ObjectList[i].x, ObjectList[i].y, ObjectList[i].z);
+			coneNosso.setValores(ObjectList[i].dim1, ObjectList[i].dim2);
+			coneNosso.Desenha();
+			glPopMatrix();
+			break;
+		case 8: //Cilindro nosso
+			glPushMatrix();
+			glColor3f(ObjectList[i].r, ObjectList[i].g, ObjectList[i].b);
+			glTranslatef(ObjectList[i].x, ObjectList[i].y, ObjectList[i].z);
+			cilindroNosso.setValores(ObjectList[i].dim1, ObjectList[i].dim2);
+			cilindroNosso.Desenha();
+			glPopMatrix();
+			break;
+		}
+	}
+
+	glPopMatrix();
+	glutSwapBuffers(); 
 }
 
 /* Main function: GLUT runs as a console application starting at main() */
@@ -218,6 +325,7 @@ int main(int argc, char** argv) {
 	glutSpecialFunc(processSpecialKeys);  // Register callback handler for arrow keys 
 	glutKeyboardFunc(processRegularKey);
 	glutMouseFunc(mouse);
+	DisplayFileRead("df.txt");
 
 	initGL();                           // Our own OpenGL initialization
 
