@@ -1,5 +1,4 @@
-﻿  Cilindro.cpp
-C:\temp\Projeto-CSG-3D\Projeto\freeglut_vc19\Cilindro.cpp(65,83): warning C4244: '+=': conversão de 'double' para 'GLfloat', possível perda de dados
-C:\temp\Projeto-CSG-3D\Projeto\freeglut_vc19\Cilindro.cpp(66,13): warning C4244: 'inicializando': conversão de 'double' para 'GLfloat', possível perda de dados
-C:\temp\Projeto-CSG-3D\Projeto\freeglut_vc19\Cilindro.cpp(67,13): warning C4244: 'inicializando': conversão de 'double' para 'GLfloat', possível perda de dados
+﻿  freeglut_vc19.cpp
+C:\temp\Projeto-CSG-3D\Projeto\freeglut_vc19\freeglut_vc19.cpp(45,2): warning C4091: 'typedef ': ignorado à esquerda de 'objeto' quando nenhuma variável é declarada
+C:\temp\Projeto-CSG-3D\Projeto\freeglut_vc19\freeglut_vc19.cpp(262,13): warning C4244: 'inicializando': conversão de 'GLfloat' para 'int', possível perda de dados
   freeglut_vc19.vcxproj -> C:\temp\Projeto-CSG-3D\Projeto\x64\Debug\freeglut_vc19.exe

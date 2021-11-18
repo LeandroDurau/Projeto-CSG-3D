@@ -1,7 +1,6 @@
     ###        Itens a serem feitos      ###
 
-- iluminação com fontes de luz definidas no arquivo de cena
-- projeção ortogonal e perspectiva
+
 - interação:
 --- seleção de objeto
 --- liga/desliga visibilidade de objeto selecionado
@@ -10,7 +9,7 @@
 --- criação de objetos
 - objetos a serem considerados:
 
---- composição de objetos (cruz3d, p.ex.)
+
 --- coleção de triângulos
 --- objeto em movimento (velocidade e aceleração iniciais)
  
@@ -30,3 +29,7 @@
 --- liga/desliga grid
 --- objetos glutSolidXXXX
 --- nossos objetos (cubo, disco, cone, cilindro)
+--- composição de objetos (cruz3d, p.ex.)
+
+- iluminação com fontes de luz definidas no arquivo de cena
+- projeção ortogonal e perspectiva

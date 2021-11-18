@@ -5,7 +5,7 @@ class Cone
 public:
 	int resolucao;
 	float altura;
-	float tri[100][3];
+	float tri[201][3];
 	float raio;
 public:
 	Cone(int resolucaoz);

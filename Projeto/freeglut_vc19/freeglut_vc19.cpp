@@ -20,6 +20,7 @@ char title[] = "OpenGL-PUC PR 2021 - ";
 
 boolean grid_on = true;
 boolean lights_on = true;
+boolean projection_perspective = true;
 int numObjects;
 int resolution = 24;
 
@@ -31,7 +32,10 @@ GLfloat zNear = +100.0f;
 GLfloat zFar = -100.0f;
 GLfloat zCut = 0.0f;
 
-GLfloat posicaoLuz[4] = { 0.0, 150.0, 500.0, 1.0 };
+GLfloat posicaoLuz[4];
+GLfloat luzAmbiente[4];
+GLfloat luzDifusa[4];
+GLfloat luzEspecular[4];
 
 typedef struct objeto {
 	int id;
@@ -40,12 +44,15 @@ typedef struct objeto {
 	float r, g, b;
 };
 
-objeto ObjectList[12];
+objeto ObjectList[15];
 
 Cubo cuboNosso;
 Disco discoNosso(resolution);
 Cone coneNosso(resolution);
 Cilindro cilindroNosso(resolution);
+
+Cone coneComposicao(resolution);
+Cilindro cilindroComposicao(resolution);
 
 
 
@@ -64,16 +71,19 @@ void cor(std::string n_cor) {
 // Função usada para especificar o volume de visualização
 void setVisParam(void)
 {
+	if(projection_perspective){
 	// Especifica sistema de coordenadas de projeção
 	glMatrixMode(GL_PROJECTION);
 	// Inicializa sistema de coordenadas de projeção
 	glLoadIdentity();
+
 	// Especifica a projeção perspectiva
 	gluPerspective(angleV, fAspect, zNear + zCut, zFar - zCut); // fovy, aspect ratio, zNear, zFar
 	glMatrixMode(GL_MODELVIEW); // Especifica sistema de coordenadas do modelo
 	glLoadIdentity(); 	        // Inicializa sistema de coordenadas do modelo
 	// Especifica posição do observador e do alvo
 	gluLookAt(obsX, obsY, obsZ, 0, 0, 0, 0, 1, 0); // eyeX,eyeY,eyeZ,centerX,centerY,centerZ,upX,upY,upZ
+	}
 }
 
 /* Handler for window re-size event. Called back when the window first appears and
@@ -85,7 +95,17 @@ void reshape(GLsizei w, GLsizei h) {
 	glViewport(0, 0, w, h);
 	// Calcula a correção de aspecto
 	fAspect = (GLfloat)w / (GLfloat)h;
-	setVisParam();
+	if(projection_perspective) setVisParam();
+	else {
+		glMatrixMode(GL_PROJECTION);
+		glLoadIdentity();
+		if (w <= h) {
+			glOrtho(-nRange, nRange, -nRange * h / w, nRange * h / w, -nRange, nRange);
+		}
+		else {
+			glOrtho(-nRange * w/h, nRange*w/h, -nRange, nRange, -nRange, nRange);
+		}
+	}
 }
 
 // Keyboard ...
@@ -146,6 +166,10 @@ void processRegularKey(unsigned char key, int xx, int yy) {
 	case 'g':
 		if (grid_on) grid_on = false; else grid_on = true;
 		break;
+	case 'P':
+	case 'p':
+		if (projection_perspective) projection_perspective = false; else projection_perspective = true;
+		break;
 	}
 	setVisParam();
 	glutPostRedisplay();
@@ -169,6 +193,36 @@ void mouse(int button, int state, int xx, int yy)
 void initGL() {
 	angleV = 45;
 
+	for (int i = 1; i <= numObjects; i++) {
+		switch (ObjectList[i].id) {
+
+		case 100:
+			posicaoLuz[0] = ObjectList[i].x;
+			posicaoLuz[1] = ObjectList[i].y;
+			posicaoLuz[2] = ObjectList[i].z;
+			posicaoLuz[3] = ObjectList[i].dim1;
+			cout << posicaoLuz[2] << "klgioppojiopjohi" << endl;
+			break;
+		case 101:
+			luzAmbiente[0] = ObjectList[i].r;
+			luzAmbiente[1] = ObjectList[i].g;
+			luzAmbiente[2] = ObjectList[i].b;
+			luzAmbiente[3] = ObjectList[i].dim1;
+			break;
+		case 102:
+			luzDifusa[0] = ObjectList[i].r;
+			luzDifusa[1] = ObjectList[i].g;
+			luzDifusa[2] = ObjectList[i].b;
+			luzDifusa[3] = ObjectList[i].dim1;
+			break;
+		case 103:
+			luzEspecular[0] = ObjectList[i].r;
+			luzEspecular[1] = ObjectList[i].g;
+			luzEspecular[2] = ObjectList[i].b;
+			luzEspecular[3] = ObjectList[i].dim1;
+			break;
+		}
+	}
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f); // Set background color to black and opaque
 	glClearDepth(1.0f);                   // Set background depth to farthest
 	glEnable(GL_DEPTH_TEST);			  // Enable depth testing for z-culling
@@ -177,9 +231,6 @@ void initGL() {
 	glShadeModel(GL_FLAT);
 //	glShadeModel(GL_SMOOTH);
 
-	GLfloat luzAmbiente[4]  = { 0.2,0.2,0.2,1.0 };
-	GLfloat luzDifusa[4]    = { 0.5,0.5,0.5,1.0 };
-	GLfloat luzEspecular[4] = { 0.5,0.5,0.5,1.0 };
 
 	// Capacidade de brilho do material
 	GLfloat especularidade[4] = { 1.0,1.0,1.0,1.0 };
@@ -241,6 +292,9 @@ void render() {
 		glRotatef(angleX, 1.0f, 0.0f, 0.0f);
 		glRotatef(angleY, 0.0f, 1.0f, 0.0f);
 		glRotatef(angleZ, 0.0f, 0.0f, 1.0f);
+		if (!projection_perspective) {
+			glScalef(angleV/40, angleV/40, angleV/40);
+		}
 		if (grid_on) grid();
 
 
@@ -304,6 +358,20 @@ void render() {
 			glTranslatef(ObjectList[i].x, ObjectList[i].y, ObjectList[i].z);
 			cilindroNosso.setValores(ObjectList[i].dim1, ObjectList[i].dim2);
 			cilindroNosso.Desenha();
+			glPopMatrix();
+			break;
+		case 9: //Composicao
+			glPushMatrix();
+			glColor3f(ObjectList[i].r, ObjectList[i].g, ObjectList[i].b);
+			glTranslatef(ObjectList[i].x, ObjectList[i].y, ObjectList[i].z);
+			cilindroComposicao.setValores(ObjectList[i].dim1, ObjectList[i].dim2);
+			cilindroComposicao.Desenha();
+			glPushMatrix();
+			glRotatef(-90.0, 1.0, 0.0, 0.0);
+			glTranslatef(0, 0, ObjectList[i].dim2 / 2);
+			coneComposicao.setValores(ObjectList[i].dim1, ObjectList[i].dim2 / 2);
+			coneComposicao.Desenha();
+			glPopMatrix();
 			glPopMatrix();
 			break;
 		}

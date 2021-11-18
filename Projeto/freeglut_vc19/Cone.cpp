@@ -2,6 +2,8 @@
 #include <math.h>
 #include <GL\freeglut.h>
 #include "Triangle.h"
+#include <iostream>
+using namespace std;
 
 Cone::Cone(int resolucaoz)
 {
