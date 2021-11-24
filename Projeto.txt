@@ -2,27 +2,20 @@
 
 
 - interação:
---- seleção de objeto
---- liga/desliga visibilidade de objeto selecionado
---- movimentação de objeto selecionado
---- escolha da projeção (ortogonal / perspectiva)
 --- criação de objetos
 - objetos a serem considerados:
-
 
 --- coleção de triângulos
 --- objeto em movimento (velocidade e aceleração iniciais)
  
+
     ###       Itens começados         ###     
-
-- leitura de arquivo de cena
-
-
 
 
     ###        Itens já feitos        ###
-
-
+--- movimentação de objeto selecionado
+--- seleção de objeto
+- leitura de arquivo de cena
 --- órbita ao redor da cena
 --- zoom
 --- liga/desliga iluminação
@@ -30,6 +23,7 @@
 --- objetos glutSolidXXXX
 --- nossos objetos (cubo, disco, cone, cilindro)
 --- composição de objetos (cruz3d, p.ex.)
-
+--- liga/desliga visibilidade de objeto selecionado
+--- escolha da projeção (ortogonal / perspectiva)
 - iluminação com fontes de luz definidas no arquivo de cena
 - projeção ortogonal e perspectiva

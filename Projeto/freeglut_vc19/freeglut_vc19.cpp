@@ -21,8 +21,10 @@ char title[] = "OpenGL-PUC PR 2021 - ";
 boolean grid_on = true;
 boolean lights_on = true;
 boolean projection_perspective = true;
+boolean objOnOff = true;
 int numObjects;
 int resolution = 24;
+int selector = 1;
 
 GLfloat nRange = 100.0f;
 GLfloat angleV = 45.0f, fAspect;
@@ -42,6 +44,7 @@ typedef struct objeto {
 	float dim1, dim2;
 	float x, y, z;
 	float r, g, b;
+	boolean ligado;
 };
 
 objeto ObjectList[15];
@@ -146,6 +149,7 @@ void DisplayFileRead(const char* fileName) // na versão 2015 (char * fileName)
 			>> ObjectList[i].dim1 >> ObjectList[i].dim2
 			>> ObjectList[i].x >> ObjectList[i].y >> ObjectList[i].z
 			>> ObjectList[i].r >> ObjectList[i].g >> ObjectList[i].b;
+		ObjectList[i].ligado = true;
 	}
 	inStream.close();				// fecha o arquivo
 }
@@ -169,6 +173,46 @@ void processRegularKey(unsigned char key, int xx, int yy) {
 	case 'P':
 	case 'p':
 		if (projection_perspective) projection_perspective = false; else projection_perspective = true;
+		break;
+	case 'A':
+	case 'a':
+		selector--;
+		if (selector < 1) {
+			selector = 9;
+		}
+		break;
+	case 'D':
+	case 'd':
+		selector++;
+		if (selector > 9) selector = 1;
+		break;
+	case 'V':
+	case 'v':
+		if (ObjectList[selector].ligado)ObjectList[selector].ligado = false; else ObjectList[selector].ligado = true;
+		break;
+	case 'H':
+	case 'h':
+		ObjectList[selector].x--;
+		break;
+	case 'K':
+	case 'k':
+		ObjectList[selector].x++;
+		break;
+	case 'U':
+	case 'u':
+		ObjectList[selector].z--;
+		break;
+	case 'J':
+	case 'j':
+		ObjectList[selector].z++;
+		break;
+	case 'I':
+	case 'i':
+		ObjectList[selector].y--;
+		break;
+	case 'Y':
+	case 'y':
+		ObjectList[selector].y++;
 		break;
 	}
 	setVisParam();
@@ -201,7 +245,6 @@ void initGL() {
 			posicaoLuz[1] = ObjectList[i].y;
 			posicaoLuz[2] = ObjectList[i].z;
 			posicaoLuz[3] = ObjectList[i].dim1;
-			cout << posicaoLuz[2] << "klgioppojiopjohi" << endl;
 			break;
 		case 101:
 			luzAmbiente[0] = ObjectList[i].r;
@@ -301,78 +344,140 @@ void render() {
 	for (int i = 1; i <= numObjects; i++) {
 		switch (ObjectList[i].id) {
 		case 1: //cubo
-			glPushMatrix();
-			glColor3f(ObjectList[i].r, ObjectList[i].g, ObjectList[i].b);
-			glTranslatef(ObjectList[i].x, ObjectList[i].y, ObjectList[i].z);
-			glutSolidCube(ObjectList[i].dim1);
-			glPopMatrix();
+			if (ObjectList[i].ligado) {
+				glPushMatrix();
+				glColor3f(ObjectList[i].r, ObjectList[i].g, ObjectList[i].b);
+				glTranslatef(ObjectList[i].x, ObjectList[i].y, ObjectList[i].z);
+				glutSolidCube(ObjectList[i].dim1);
+				if (selector == 1) {
+					glColor3f(1.0f, 1.0f, 1.0f);
+					glutWireCube(ObjectList[i].dim1);
+				}
+				glPopMatrix();
+			}
 			break;
 		case 2: //esfera
-			glPushMatrix();
-			glColor3f(ObjectList[i].r, ObjectList[i].g, ObjectList[i].b);
-			glTranslatef(ObjectList[i].x, ObjectList[i].y, ObjectList[i].z);
-			glutSolidSphere(ObjectList[i].dim1, resolution, resolution);
-			glPopMatrix();
+			if (ObjectList[i].ligado) {
+				glPushMatrix();
+				glColor3f(ObjectList[i].r, ObjectList[i].g, ObjectList[i].b);
+				glTranslatef(ObjectList[i].x, ObjectList[i].y, ObjectList[i].z);
+				glutSolidSphere(ObjectList[i].dim1, resolution, resolution);
+				if (selector == 2) {
+					glColor3f(1.0f, 1.0f, 1.0f);
+					glutWireSphere(ObjectList[i].dim1, resolution, resolution);
+				}
+				glPopMatrix();
+			}
 			break;
 		case 3: //Teapot
-			glPushMatrix();
-			glColor3f(ObjectList[i].r, ObjectList[i].g, ObjectList[i].b);
-			glTranslatef(ObjectList[i].x, ObjectList[i].y, ObjectList[i].z);
-			glutSolidTeapot(ObjectList[i].dim1);
-			glPopMatrix();
+			if (ObjectList[i].ligado) {
+				glPushMatrix();
+				glColor3f(ObjectList[i].r, ObjectList[i].g, ObjectList[i].b);
+				glTranslatef(ObjectList[i].x, ObjectList[i].y, ObjectList[i].z);
+				glutSolidTeapot(ObjectList[i].dim1);
+				if (selector == 3) {
+					glColor3f(1.0f, 1.0f, 1.0f);
+					glutWireTeapot(ObjectList[i].dim1);
+				}
+				glPopMatrix();
+			}
 			break;
 		case 4: //Teacup
-			glPushMatrix();
-			glColor3f(ObjectList[i].r, ObjectList[i].g, ObjectList[i].b);
-			glTranslatef(ObjectList[i].x, ObjectList[i].y, ObjectList[i].z);
-			glutSolidTeacup(ObjectList[i].dim1);
-			glPopMatrix();
+			if (ObjectList[i].ligado) {
+				glPushMatrix();
+				glColor3f(ObjectList[i].r, ObjectList[i].g, ObjectList[i].b);
+				glTranslatef(ObjectList[i].x, ObjectList[i].y, ObjectList[i].z);
+				glutSolidTeacup(ObjectList[i].dim1);
+				if (selector == 4) {
+					glColor3f(1.0f, 1.0f, 1.0f);
+					glutWireTeacup(ObjectList[i].dim1);
+				}
+				glPopMatrix();
+			}
 			break;
 		case 5: //Cubo nosso
-			glPushMatrix();
-			glColor3f(ObjectList[i].r, ObjectList[i].g, ObjectList[i].b);
-			glTranslatef(ObjectList[i].x, ObjectList[i].y, ObjectList[i].z);
-			cuboNosso.setValores(ObjectList[i].dim1);
-			cuboNosso.Desenha();
-			glPopMatrix();
+			if (ObjectList[i].ligado) {
+				glPushMatrix();
+				glColor3f(ObjectList[i].r, ObjectList[i].g, ObjectList[i].b);
+				glTranslatef(ObjectList[i].x, ObjectList[i].y, ObjectList[i].z);
+				cuboNosso.setValores(ObjectList[i].dim1);
+				cuboNosso.Desenha();
+				if (selector == 5) {
+					glColor3f(1.0f, 1.0f, 1.0f);
+					glutWireCube(ObjectList[i].dim1);
+				}
+				glPopMatrix();
+			}
 			break;
 		case 6: //Disco nosso
-			glPushMatrix();
-			glColor3f(ObjectList[i].r, ObjectList[i].g, ObjectList[i].b);
-			glTranslatef(ObjectList[i].x, ObjectList[i].y, ObjectList[i].z);
-			discoNosso.setValores(ObjectList[i].dim1);
-			discoNosso.Desenha();
-			glPopMatrix();
+			if(ObjectList[i].ligado){
+				glPushMatrix();
+				glColor3f(ObjectList[i].r, ObjectList[i].g, ObjectList[i].b);
+				glTranslatef(ObjectList[i].x, ObjectList[i].y, ObjectList[i].z);
+				discoNosso.setValores(ObjectList[i].dim1);
+				discoNosso.Desenha();
+				if (selector == 6) {
+					glColor3f(1.0f, 1.0f, 1.0f);
+					glutWireCone(ObjectList[i].dim1, 0.2, resolution, resolution);
+				}
+				glPopMatrix();
+			}
 			break;
 		case 7: //Cone nosso
-			glPushMatrix();
-			glColor3f(ObjectList[i].r, ObjectList[i].g, ObjectList[i].b);
-			glTranslatef(ObjectList[i].x, ObjectList[i].y, ObjectList[i].z);
-			coneNosso.setValores(ObjectList[i].dim1, ObjectList[i].dim2);
-			coneNosso.Desenha();
-			glPopMatrix();
+			if (ObjectList[i].ligado) {
+				glPushMatrix();
+				glColor3f(ObjectList[i].r, ObjectList[i].g, ObjectList[i].b);
+				glTranslatef(ObjectList[i].x, ObjectList[i].y, ObjectList[i].z);
+				coneNosso.setValores(ObjectList[i].dim1, ObjectList[i].dim2);
+				coneNosso.Desenha();
+				if (selector == 7) {
+					glColor3f(1.0f, 1.0f, 1.0f);
+					glutWireCone(ObjectList[i].dim1, ObjectList[i].dim2, resolution, resolution);
+				}
+				glPopMatrix();
+			}
 			break;
 		case 8: //Cilindro nosso
-			glPushMatrix();
-			glColor3f(ObjectList[i].r, ObjectList[i].g, ObjectList[i].b);
-			glTranslatef(ObjectList[i].x, ObjectList[i].y, ObjectList[i].z);
-			cilindroNosso.setValores(ObjectList[i].dim1, ObjectList[i].dim2);
-			cilindroNosso.Desenha();
-			glPopMatrix();
+			if (ObjectList[i].ligado) {
+				glPushMatrix();
+				glColor3f(ObjectList[i].r, ObjectList[i].g, ObjectList[i].b);
+				glTranslatef(ObjectList[i].x, ObjectList[i].y, ObjectList[i].z);
+				cilindroNosso.setValores(ObjectList[i].dim1, ObjectList[i].dim2);
+				cilindroNosso.Desenha();
+				if (selector == 8) {
+					glPushMatrix();
+						glRotatef(90, 1.0f, 0.0f, 0.0f);
+						glTranslatef(0, 0, -ObjectList[i].dim2 / 2);
+						glColor3f(1.0f, 1.0f, 1.0f);
+						glutWireCylinder(ObjectList[i].dim1, ObjectList[i].dim2, resolution, resolution);
+					glPopMatrix();
+				}
+				glPopMatrix();
+			}
 			break;
 		case 9: //Composicao
-			glPushMatrix();
-			glColor3f(ObjectList[i].r, ObjectList[i].g, ObjectList[i].b);
-			glTranslatef(ObjectList[i].x, ObjectList[i].y, ObjectList[i].z);
-			cilindroComposicao.setValores(ObjectList[i].dim1, ObjectList[i].dim2);
-			cilindroComposicao.Desenha();
-			glPushMatrix();
-			glRotatef(-90.0, 1.0, 0.0, 0.0);
-			glTranslatef(0, 0, ObjectList[i].dim2 / 2);
-			coneComposicao.setValores(ObjectList[i].dim1, ObjectList[i].dim2 / 2);
-			coneComposicao.Desenha();
-			glPopMatrix();
-			glPopMatrix();
+			if (ObjectList[i].ligado) {
+				glPushMatrix();
+				glColor3f(ObjectList[i].r, ObjectList[i].g, ObjectList[i].b);
+				glTranslatef(ObjectList[i].x, ObjectList[i].y, ObjectList[i].z);
+				cilindroComposicao.setValores(ObjectList[i].dim1, ObjectList[i].dim2);
+				cilindroComposicao.Desenha();
+				glPushMatrix();
+				glRotatef(-90.0, 1.0, 0.0, 0.0);
+				glTranslatef(0, 0, ObjectList[i].dim2 / 2);
+				coneComposicao.setValores(ObjectList[i].dim1, ObjectList[i].dim2 / 2);
+				coneComposicao.Desenha();
+				if (selector == 9) {
+					glColor3f(1.0f, 1.0f, 1.0f);
+					glPushMatrix();
+					glTranslatef(0, 0, -ObjectList[i].dim2);
+					glutWireCylinder(ObjectList[i].dim1, ObjectList[i].dim2, resolution, resolution);
+					glPopMatrix();
+					glutWireCone(ObjectList[i].dim1, ObjectList[i].dim2/2, resolution, resolution);
+				}
+				glPopMatrix();
+				glPopMatrix();
+			}
 			break;
 		}
 	}
@@ -416,9 +521,12 @@ int main(int argc, char** argv) {
 	cout << "Mouse: botao esquerdo zoom in, direito zoom out" << endl;
 	cout << "Teclado: setas rotacao da cena (eixos X e Y)" << endl;
 	cout << "Teclado: PgUp e PgDn rotacao da cena (eixo Z)" << endl;
-	cout << "Teclado: tecla L liga a iluminacao" << endl;
-	cout << "Teclado: tecla O desliga a iluminacao" << endl;
+	cout << "Teclado: tecla L liga e desliga a iluminacao" << endl;
+	cout << "Teclado: tecla P muda entre perspectivas" << endl;
 	cout << "Teclado: tecla G liga e desliga o desenho do Grid" << endl;
+	cout << "Teclado: tecla A volta para o objeto anterior" << endl;
+	cout << "Teclado: tecla D passa para o próximo objeto" << endl;
+	cout << "Teclado: tecla V liga e desliga a visibilidade do objeto" << endl;
 
 	glutMainLoop();                 // Enter the infinite event-processing loop
 	return 0;
