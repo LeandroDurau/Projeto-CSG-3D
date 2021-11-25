@@ -602,8 +602,8 @@ int main(int argc, char** argv) {
 	cout << "Teclado: tecla Y move objeto seleciona para cima" << endl;
 	cout << "Teclado: tecla I move objeto seleciona para baixo" << endl;
 	cout << "Teclado: tecla J move objeto seleciona para frente" << endl;
-	cout << "Teclado: tecla U move objeto seleciona para trás" << endl;
-	cout << "Teclado: tecla R reseta localizações" << endl;
+	cout << "Teclado: tecla U move objeto seleciona para tras" << endl;
+	cout << "Teclado: tecla R reseta localizacoes" << endl;
 	glutMainLoop();                 // Enter the infinite event-processing loop
 	return 0;
 }
