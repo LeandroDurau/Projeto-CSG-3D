@@ -1,5 +1,5 @@
 ﻿  freeglut_vc19.cpp
-C:\Users\User\Documents\Programas\GitHub\Projeto-CSG-3D\Projeto\freeglut_vc19\freeglut_vc19.cpp(54,2): warning C4091: 'typedef ': ignorado à esquerda de 'objeto' quando nenhuma variável é declarada
-C:\Users\User\Documents\Programas\GitHub\Projeto-CSG-3D\Projeto\freeglut_vc19\freeglut_vc19.cpp(263,39): warning C4244: '=': conversão de 'double' para 'float', possível perda de dados
-C:\Users\User\Documents\Programas\GitHub\Projeto-CSG-3D\Projeto\freeglut_vc19\freeglut_vc19.cpp(342,13): warning C4244: 'inicializando': conversão de 'GLfloat' para 'int', possível perda de dados
+C:\Users\User\Documents\Programas\GitHub\Projeto-CSG-3D\Projeto\freeglut_vc19\freeglut_vc19.cpp(55,2): warning C4091: 'typedef ': ignorado à esquerda de 'objeto' quando nenhuma variável é declarada
+C:\Users\User\Documents\Programas\GitHub\Projeto-CSG-3D\Projeto\freeglut_vc19\freeglut_vc19.cpp(265,39): warning C4244: '=': conversão de 'double' para 'float', possível perda de dados
+C:\Users\User\Documents\Programas\GitHub\Projeto-CSG-3D\Projeto\freeglut_vc19\freeglut_vc19.cpp(344,13): warning C4244: 'inicializando': conversão de 'GLfloat' para 'int', possível perda de dados
   freeglut_vc19.vcxproj -> C:\Users\User\Documents\Programas\GitHub\Projeto-CSG-3D\Projeto\x64\Debug\freeglut_vc19.exe

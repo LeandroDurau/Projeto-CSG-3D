@@ -7,6 +7,7 @@
 
 #include <fstream>
 
+#include "LetraA.h"
 #include "Triangle.h"
 #include "TetraHedro.h"
 #include "Cubo.h"
@@ -65,6 +66,7 @@ Cilindro cilindroComposicao(resolution);
 Cilindro cilindroComposicao2(resolution);
 
 Cubo cubomovimento;
+LetraA conjtri;
 
 
 
@@ -563,8 +565,18 @@ void render() {
 			break;
 		case 11://Triangulo
 			if (ObjectList[i].ligado) {
-
-
+				glPushMatrix();
+				glColor3f(ObjectList[i].r, ObjectList[i].g, ObjectList[i].b);
+				glTranslatef(ObjectList[i].x, ObjectList[i].y, ObjectList[i].z);
+				conjtri.setValores(ObjectList[i].dim1, ObjectList[i].dim2);
+				conjtri.Desenha();
+				if (selector == 11) {
+					glPushMatrix();
+					glColor3f(1.0f, 1.0f, 1.0f);
+					conjtri.Desenha();
+					glPopMatrix();
+				}
+				glPopMatrix();
 			}
 
 			break;

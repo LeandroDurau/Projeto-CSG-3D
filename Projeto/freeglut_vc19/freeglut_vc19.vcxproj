@@ -151,6 +151,7 @@
     <ClCompile Include="Cubo.cpp" />
     <ClCompile Include="Disco.cpp" />
     <ClCompile Include="freeglut_vc19.cpp" />
+    <ClCompile Include="LetraA.cpp" />
     <ClCompile Include="TetraHedro.cpp" />
     <ClCompile Include="Triangle.cpp" />
   </ItemGroup>
@@ -159,6 +160,7 @@
     <ClInclude Include="Cone.h" />
     <ClInclude Include="Cubo.h" />
     <ClInclude Include="Disco.h" />
+    <ClInclude Include="LetraA.h" />
     <ClInclude Include="TetraHedro.h" />
     <ClInclude Include="Triangle.h" />
   </ItemGroup>

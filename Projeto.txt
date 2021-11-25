@@ -1,16 +1,17 @@
     ###        Itens a serem feitos      ###
 
 
-- interação:
---- criação de objetos
-- objetos a serem considerados:
---- coleção de triângulos
- 
 
     ###       Itens começados         ###     
 
 
     ###        Itens já feitos        ###
+
+- interação:
+--- criação de objetos
+- objetos a serem considerados:
+--- coleção de triângulos
+ 
 --- movimentação de objeto selecionado
 --- seleção de objeto
 - leitura de arquivo de cena
