@@ -146,6 +146,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Cilindro.cpp" />
+    <ClCompile Include="ClasseVetor.cpp" />
     <ClCompile Include="Cone.cpp" />
     <ClCompile Include="Cubo.cpp" />
     <ClCompile Include="Disco.cpp" />

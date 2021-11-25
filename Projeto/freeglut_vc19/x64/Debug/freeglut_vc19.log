@@ -1,4 +1,4 @@
 ﻿  freeglut_vc19.cpp
-C:\temp\Projeto-CSG-3D\Projeto\freeglut_vc19\freeglut_vc19.cpp(48,2): warning C4091: 'typedef ': ignorado à esquerda de 'objeto' quando nenhuma variável é declarada
-C:\temp\Projeto-CSG-3D\Projeto\freeglut_vc19\freeglut_vc19.cpp(305,13): warning C4244: 'inicializando': conversão de 'GLfloat' para 'int', possível perda de dados
-  freeglut_vc19.vcxproj -> C:\temp\Projeto-CSG-3D\Projeto\x64\Debug\freeglut_vc19.exe
+C:\Users\User\Documents\Programas\GitHub\Projeto-CSG-3D\Projeto\freeglut_vc19\freeglut_vc19.cpp(54,2): warning C4091: 'typedef ': ignorado à esquerda de 'objeto' quando nenhuma variável é declarada
+C:\Users\User\Documents\Programas\GitHub\Projeto-CSG-3D\Projeto\freeglut_vc19\freeglut_vc19.cpp(316,13): warning C4244: 'inicializando': conversão de 'GLfloat' para 'int', possível perda de dados
+  freeglut_vc19.vcxproj -> C:\Users\User\Documents\Programas\GitHub\Projeto-CSG-3D\Projeto\x64\Debug\freeglut_vc19.exe

@@ -13,10 +13,11 @@
 #include "Disco.h"
 #include "Cone.h"
 #include "Cilindro.h"
+#include "ClasseVetor.cpp"
 
 using namespace std;
 
-char title[] = "OpenGL-PUC PR 2021 - ";
+char title[] = "OpenGL-PUC PR 2021 - Projeto TDE ";
 
 boolean grid_on = true;
 boolean lights_on = true;
@@ -39,6 +40,11 @@ GLfloat luzAmbiente[4];
 GLfloat luzDifusa[4];
 GLfloat luzEspecular[4];
 
+//base para movimento (pegar do arquivo) [problema 2 dim possivel aumentar?]
+Vetor posicao1(1, 0.0f, 0.0f, 0.0f);
+Vetor velocidade1(2, 1.5f, 2.1f, 1.0f);
+Vetor gravidade(3, 0.0f, -0.2f, 0.0f);
+
 typedef struct objeto {
 	int id;
 	float dim1, dim2;
@@ -47,7 +53,7 @@ typedef struct objeto {
 	boolean ligado;
 };
 
-objeto ObjectList[15];
+objeto ObjectList[17];
 
 Cubo cuboNosso;
 Disco discoNosso(resolution);
@@ -56,6 +62,7 @@ Cilindro cilindroNosso(resolution);
 
 Cone coneComposicao(resolution);
 Cilindro cilindroComposicao(resolution);
+Cilindro cilindroComposicao2(resolution);
 
 
 
@@ -184,7 +191,7 @@ void processRegularKey(unsigned char key, int xx, int yy) {
 	case 'D':
 	case 'd':
 		selector++;
-		if (selector > 9) selector = 1;
+		if (selector > 10) selector = 1;
 		break;
 	case 'V':
 	case 'v':
@@ -213,6 +220,10 @@ void processRegularKey(unsigned char key, int xx, int yy) {
 	case 'Y':
 	case 'y':
 		ObjectList[selector].y++;
+		break;
+	case 'R':
+	case 'r':
+		DisplayFileRead("df.txt");
 		break;
 	}
 	setVisParam();
@@ -479,6 +490,65 @@ void render() {
 				glPopMatrix();
 			}
 			break;
+		case 10://Cruz 3D
+			if (ObjectList[i].ligado) {
+				glColor3f(1.0f, 1.0f, 1.0f);
+				glPushMatrix();
+					glColor3f(ObjectList[i].r, ObjectList[i].g, ObjectList[i].b);
+					glTranslatef(ObjectList[i].x, ObjectList[i].y, ObjectList[i].z);
+					cilindroComposicao2.setValores(ObjectList[i].dim1, ObjectList[i].dim2 );
+					glPushMatrix();
+						glRotatef(90.0f, 1, 0, 0);
+						cilindroComposicao2.Desenha();
+					glPopMatrix();
+
+					glPushMatrix();
+						cilindroComposicao2.Desenha();
+					glPopMatrix();
+
+					glPushMatrix();
+						glRotatef(90.0f, 0, 0, 1);
+						cilindroComposicao2.Desenha();
+					glPopMatrix();
+					if (selector == 10) {
+						glColor3f(1.0f, 1.0f, 1.0f);
+						glPushMatrix();
+							glRotatef(90.0f, 1, 0, 0);
+							glTranslatef(0.0f, 0.0f, -25.0f);
+							glutWireCylinder(ObjectList[i].dim1, ObjectList[i].dim2, resolution, resolution);
+						glPopMatrix();
+
+						glPushMatrix();
+							glTranslatef(0.0f, 0.0f, -25.0f);
+							glutWireCylinder(ObjectList[i].dim1, ObjectList[i].dim2, resolution, resolution);
+						glPopMatrix();
+
+						glPushMatrix();
+							glRotatef(90.0f, 0, 1, 0);
+							glTranslatef(0.0f, 0.0f, -25.0f);
+							glutWireCylinder(ObjectList[i].dim1, ObjectList[i].dim2, resolution, resolution);
+						glPopMatrix();
+					}
+				glPopMatrix();
+
+
+			}
+
+			break;
+		case 11://Triangulo
+			if (ObjectList[i].ligado) {
+
+
+			}
+
+			break;
+		case 12://Cubo em movimento
+			if (ObjectList[i].ligado) {
+
+
+			}
+
+			break;
 		}
 	}
 
@@ -527,7 +597,13 @@ int main(int argc, char** argv) {
 	cout << "Teclado: tecla A volta para o objeto anterior" << endl;
 	cout << "Teclado: tecla D passa para o próximo objeto" << endl;
 	cout << "Teclado: tecla V liga e desliga a visibilidade do objeto" << endl;
-
+	cout << "Teclado: tecla H move objeto seleciona para esquerda" << endl;
+	cout << "Teclado: tecla K move objeto seleciona para direita" << endl;
+	cout << "Teclado: tecla Y move objeto seleciona para cima" << endl;
+	cout << "Teclado: tecla I move objeto seleciona para baixo" << endl;
+	cout << "Teclado: tecla J move objeto seleciona para frente" << endl;
+	cout << "Teclado: tecla U move objeto seleciona para trás" << endl;
+	cout << "Teclado: tecla R reseta localizações" << endl;
 	glutMainLoop();                 // Enter the infinite event-processing loop
 	return 0;
 }
