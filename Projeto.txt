@@ -4,9 +4,7 @@
 - interação:
 --- criação de objetos
 - objetos a serem considerados:
-
 --- coleção de triângulos
---- objeto em movimento (velocidade e aceleração iniciais)
  
 
     ###       Itens começados         ###     
@@ -23,6 +21,7 @@
 --- objetos glutSolidXXXX
 --- nossos objetos (cubo, disco, cone, cilindro)
 --- composição de objetos (cruz3d, p.ex.)
+--- objeto em movimento (velocidade e aceleração iniciais)
 --- liga/desliga visibilidade de objeto selecionado
 --- escolha da projeção (ortogonal / perspectiva)
 - iluminação com fontes de luz definidas no arquivo de cena

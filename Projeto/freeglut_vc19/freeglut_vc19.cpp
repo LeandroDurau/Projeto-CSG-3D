@@ -41,8 +41,8 @@ GLfloat luzDifusa[4];
 GLfloat luzEspecular[4];
 
 //base para movimento (pegar do arquivo) [problema 2 dim possivel aumentar?]
-Vetor posicao1(1, 0.0f, 0.0f, 0.0f);
-Vetor velocidade1(2, 1.5f, 2.1f, 1.0f);
+Vetor posicao(1, 0.0f, 0.0f, 0.0f);
+Vetor velocidade(2, 0.0f, 0.0f, 0.0f);
 Vetor gravidade(3, 0.0f, -0.2f, 0.0f);
 
 typedef struct objeto {
@@ -63,6 +63,8 @@ Cilindro cilindroNosso(resolution);
 Cone coneComposicao(resolution);
 Cilindro cilindroComposicao(resolution);
 Cilindro cilindroComposicao2(resolution);
+
+Cubo cubomovimento;
 
 
 
@@ -185,13 +187,13 @@ void processRegularKey(unsigned char key, int xx, int yy) {
 	case 'a':
 		selector--;
 		if (selector < 1) {
-			selector = 9;
+			selector = 12;
 		}
 		break;
 	case 'D':
 	case 'd':
 		selector++;
-		if (selector > 10) selector = 1;
+		if (selector > 12) selector = 1;
 		break;
 	case 'V':
 	case 'v':
@@ -244,13 +246,37 @@ void mouse(int button, int state, int xx, int yy)
 	glutPostRedisplay();
 }
 
+void update(int value) {
+	// Adição do vetor velocidade ao vetor posicao
+	posicao.SomaVetor(velocidade);
+	// Adição do vetor gravidade ao vetor velocidade
+	velocidade.SomaVetor(gravidade);
+	// Verifica a colisão com os limites (inverte o vetor correspondente)
+	if ((posicao.xcomp > nRange) || (posicao.xcomp < -nRange)) { // colisão é centro do cubo
+		velocidade.xcomp = velocidade.xcomp * -1;
+	}
+	if ((posicao.zcomp > nRange) || (posicao.zcomp < -nRange)) {
+		velocidade.zcomp = velocidade.zcomp * -1;
+	}
+	if ((posicao.ycomp > nRange) || (posicao.ycomp < -nRange)) {
+		// Redução da velocidade quando colisão com o "chão"
+		velocidade.ycomp = velocidade.ycomp * -0.95;
+		posicao.ycomp = -nRange;
+	}
+	glutPostRedisplay(); // Informa a GLUT que o "display" foi alterado
+	glutTimerFunc(25, update, 0);//Chama a função update após cada 25 milisegundos
+}
 /* Initialize OpenGL Graphics */
 void initGL() {
 	angleV = 45;
 
 	for (int i = 1; i <= numObjects; i++) {
 		switch (ObjectList[i].id) {
-
+			
+		case 12:
+			velocidade.xcomp = ObjectList[i].x;
+			velocidade.ycomp = ObjectList[i].y;
+			velocidade.zcomp = ObjectList[i].z;
 		case 100:
 			posicaoLuz[0] = ObjectList[i].x;
 			posicaoLuz[1] = ObjectList[i].y;
@@ -543,9 +569,17 @@ void render() {
 
 			break;
 		case 12://Cubo em movimento
-			if (ObjectList[i].ligado) {
-
-
+			if (ObjectList[i].ligado) {//Cubo não some, erro no codigo?
+				glPushMatrix();
+					glColor3f(ObjectList[i].r, ObjectList[i].g, ObjectList[i].b);
+					glTranslatef(posicao.xcomp,posicao.ycomp,posicao.zcomp);
+					cubomovimento.setValores(ObjectList[i].dim1);
+					cubomovimento.Desenha();
+					if (selector == 12) {
+						glColor3f(1.0f, 1.0f, 1.0f);
+						glutWireCube(ObjectList[i].dim1);
+					}
+				glPopMatrix();
 			}
 
 			break;
@@ -565,13 +599,14 @@ int main(int argc, char** argv) {
 	glutCreateWindow(title);           // Create window with the given title
 	glutDisplayFunc(render);           // Register callback handler for window re-paint event
 	glutReshapeFunc(reshape);          // Register callback handler for window re-size event
+	
 	glutSpecialFunc(processSpecialKeys);  // Register callback handler for arrow keys 
 	glutKeyboardFunc(processRegularKey);
 	glutMouseFunc(mouse);
 	DisplayFileRead("df.txt");
-
+	
 	initGL();                           // Our own OpenGL initialization
-
+	glutTimerFunc(25, update, 0);
 	// start GLEW extension handler
 	glewExperimental = GL_TRUE;
 	glewInit();
