@@ -568,7 +568,7 @@ void render() {
 				glPushMatrix();
 				glColor3f(ObjectList[i].r, ObjectList[i].g, ObjectList[i].b);
 				glTranslatef(ObjectList[i].x, ObjectList[i].y, ObjectList[i].z);
-				conjtri.setValores(ObjectList[i].dim1, ObjectList[i].dim2);
+				conjtri.setValores(ObjectList[i].dim1);
 				conjtri.Desenha();
 				if (selector == 11) {
 					glPushMatrix();
@@ -642,7 +642,7 @@ int main(int argc, char** argv) {
 	cout << "Teclado: tecla P muda entre perspectivas" << endl;
 	cout << "Teclado: tecla G liga e desliga o desenho do Grid" << endl;
 	cout << "Teclado: tecla A volta para o objeto anterior" << endl;
-	cout << "Teclado: tecla D passa para o próximo objeto" << endl;
+	cout << "Teclado: tecla D passa para o proximo objeto" << endl;
 	cout << "Teclado: tecla V liga e desliga a visibilidade do objeto" << endl;
 	cout << "Teclado: tecla H move objeto seleciona para esquerda" << endl;
 	cout << "Teclado: tecla K move objeto seleciona para direita" << endl;

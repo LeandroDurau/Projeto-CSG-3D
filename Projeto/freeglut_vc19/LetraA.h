@@ -7,7 +7,7 @@ public:
 	float tri[18][3];
 public:
 	LetraA();
-	void setValores(float aresta, float grosura);
+	void setValores(float aresta);
 	void Desenha();
 	~LetraA();
 };
